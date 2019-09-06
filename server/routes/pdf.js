@@ -43,6 +43,7 @@ app.put('/pdf', function (req, res) {
             res.sendFile(path.resolve(__dirname, `../../archives/PDF/${nombreArchivo}.pdf`), function (err){
 
                 if(err){
+                    console.log("Entra a error");
                     return res.json({
                         ok: false, 
                         message: "No se pudo enviar el archivo, intente de nuevo", 
@@ -53,6 +54,8 @@ app.put('/pdf', function (req, res) {
                 }
 
             });
+        }).catch( err => {
+            console.log("ERROR CREA");
         });
 
     });
@@ -91,6 +94,8 @@ const creaPdf = async(nombreArchivo, extension) => {
     var finalHtml = template(dataBinding);
     var options = {
         format: 'A4',
+        // width: "21.6cm",
+		// height: "27.9cm",
         headerTemplate: "<p></p>",
         footerTemplate: "<p></p>",
         displayHeaderFooter: false,
@@ -112,6 +117,8 @@ const creaPdf = async(nombreArchivo, extension) => {
     });
     await page.pdf(options);
     await browser.close();
+
+    console.log("HECHO");
 
 }
 
